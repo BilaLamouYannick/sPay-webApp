@@ -1,0 +1,181 @@
+npx react-native init projectName --template https://github.com/swiftpipe/app-base...  android 
+
+
+https://github.com/NdoleStudio/mtnmomo-go
+pour aide
+
+
+momo Api Sandbox
+
+- produit collections:
+Collections est un service qui permet aux partenaires de Mobile Money de recevoir des paiements pour
+des biens et des services à l'aide de MTN Mobile Money. Les services peuvent être en face à face
+comme MomoPay ou peuvent être effectués à distance pour à la fois hors ligne et en ligne. Les paiements
+peuvent être initiés par le client sur USSD/App/Web ou initiés par le marchand lorsqu'un client reçoit
+une demande de débit pour approbation. Une fois le service activé, un compte Collections est créé pour
+le partenaire sur lequel les fonds sont déposés/reçus. Le partenaire est en mesure d'effectuer des
+paiements ultérieurs à ses fournisseurs/partenaires/employés (B2B ou B2C) et/ou de liquider les fonds
+collectés sur leurs comptes bancaires respectifs. Le service offre la commodité de la collecte des 
+paiements en ligne, des factures, des remboursements de prêts, des contributions aux activités et des 
+versements pour les remboursements mutuellement convenus de services et de produits. Des exemples de partenaires 
+avec des recouvrements de factures sont Umeme, National Water, URA, NSSF, DSTV pour n'en citer que quelques-uns.
+
+    Primary key: 7a540d8405aa4a3db907dbe7e6c33405
+    Secondary key: ceb2573b0e134acaa52e958e80549a87
+
+    - creation de l'API key:
+        POST: les element qui ont ete envoyer pour la creation 
+            X-Reference-Id: 6a5199cd-b79f-44f8-b21b-d5537136f2db  = uuid 
+            Ocp-Apim-Subscription-Key = Primary key 
+
+        POST: pour avoir le API key genere
+            apiKey: 6b608dbc4ba84d80959884b714eba14f
+
+    * onglet collections
+
+    - generer le POST/token:
+        Cette opération est utilisée pour créer un jeton d'accès qui peut ensuite être utilisé 
+        pour autoriser et s'authentifier auprès des autres terminaux de l'API.
+
+        Authorization: En-tête d'authentification de base contenant l'ID utilisateur 
+                        de l'API et la clé de l'API. Doit être envoyé en B64 encodé.
+
+        partir sur le site https://www.base64encode.org/ pour generer l'Authorization
+
+        val = X-Reference-Id:apiKey
+        val = NmE1MTk5Y2QtYjc5Zi00NGY4LWIyMWItZDU1MzcxMzZmMmRiOjZiNjA4ZGJjNGJhODRkODA5NTk4ODRiNzE0ZWJhMTRm
+        Authorization = Basic val
+
+        nous avons apres un access_token et le temps d'expiration
+        {
+            "access_token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSMjU2In0.eyJjbGllbnRJZCI6IjZhNTE5OWNkLWI3OWYtNDRmOC1iMjFiLWQ1NTM3MTM2ZjJkYiIsImV4cGlyZXMiOiIyMDIyLTAzLTI4VDIyOjQ0OjI1LjQ5OCIsInNlc3Npb25JZCI6Ijg3MjAyMDdiLTA2OWUtNGYxOC04NDMyLWJjZWFlNDAyODVjYiJ9.HuU4XSnJBHBAyqvYEVTBc7FLosjK3NZmSMK5JomDPytawnQZbm2MmvkoyZeo9VnzpT4S6qh9iCGmAJD98fbYZjjuZASZKvnShLWSDHLAYsyxY8kHE7BEAotURjMIYD-3lLHGQI-SaBpVdNAFYFjZkGwBrzYXpoFYkXrplTbZRs6osF56WLic78gET7_XVy5BIjCd5yUWv1_hrYhHxiAku9EuhaIx8NySWHAMBLLfLLULpcVh6OHSpMTyqYnpbtmSI32qLA6YJ38AUhT7X0rEkQKcoyqK97r_p2zRE4sUjDPpdfdyI1_Cz_7EP66lQ0_ItsCoKFVBs2r8F8WjuRQYYg",
+            "token_type": "access_token",
+            "expires_in": 3600 # valable une journee
+        }
+
+    - POST/requesttopay
+
+        Cette opération permet de demander un paiement à un consommateur (Payer). Le payeur sera invité 
+        à autoriser le paiement. La transaction sera exécutée une fois que le payeur aura autorisé le 
+        paiement. La demande de paiement aura le statut EN ATTENTE jusqu'à ce que la transaction soit 
+        autorisée ou refusée par le payeur ou qu'elle soit dépassée par le système. Le statut de la transaction 
+        peut être validé en utilisant le GET /requesttopay/<resourceId>
+
+        Authorization = Bearer access_token
+        X-Target-Environment = sandbox
+        exemples:   payload   {
+                        "amount": "1000",
+                        "currency": "EUR",
+                        "externalId": "1234",
+                        "payer": {
+                            "partyIdType": "MSISDN",
+                            "partyId": "22544650223"
+                        },
+                        "payerMessage": "Fais en bon usage mon gar",
+                        "payeeNote": "TOP"
+                    }
+        supprimer X-Callback-Url pour que ca donne
+
+    - GET /requesttopay/{referenceId} - GET : permet d'avoir le statut de la requete
+
+        referenceId = X-Reference-Id
+        Authorization = Bearer access_token
+        X-Target-Environment = sandbox
+
+        exemples:   {
+                        "financialTransactionId": "1894866875",
+                        "externalId": "1234",
+                        "amount": "1000",
+                        "currency": "EUR",
+                        "payer": {
+                            "partyIdType": "MSISDN",
+                            "partyId": "46733123453"
+                        },
+                        "payerMessage": "Fais en bon usage",
+                        "payeeNote": "BON",
+                        "status": "SUCCESSFUL"
+                    }
+
+    - en resume quant on a un access_token qui valable pour une journee, on peut l'associer plusieur x-Reference-id
+
+
+
+
+
+- produit disbursement
+Disbursements est un service qui permet aux partenaires Mobile Money d'envoyer de l'argent en masse à différents 
+destinataires en un seul clic. Cette configuration peut être exécutée manuellement (connexion au système, 
+téléchargement de la liste des destinataires et déclenchement des paiements) ou automatisée (nécessite une 
+configuration unique des listes et des commandes des destinataires pour effectuer le paiement). Des exemples 
+de partenaires qui utilisent ce service sont : les sociétés de paris pour payer les gagnants, les versements 
+de fonds aux réfugiés/bénéficiaires, entre autres. On s'attend à ce que le partenaire ouvre un compte de 
+décaissement avec MTN et ce compte est pré-financé pour permettre les paiements une fois que les demandes 
+sont parvenues du partenaire. 
+
+    Primary key: 21d53f564be9473587be513c35abbc7e
+    Secondary key: 39404476efb74c72af0832fa908d890f
+
+    - creation de API key:
+        POST: les element qui ont ete envoyer pour la creation 
+            X-Reference-Id: 
+            Ocp-Apim-Subscription-Key = Primary key 
+
+        POST: pour avoir le API key genere
+            apiKey: 
+
+
+
+-produit remittances
+Remittances est une solution qui permet à un client de transférer ou de recevoir des fonds de la diaspora 
+vers le compte du destinataire de Mobile Money en devise locale. Il s'agit d'une solution automatisée où 
+l'argent est transféré en temps réel lorsque la demande arrive dans le système (fonctionne de la même manière 
+que la solution de décaissement automatisée). L'expéditeur se connecte sur le Web/App/USSD (USSD uniquement pour 
+les appels sortants) ou se rend au point de vente de l'expéditeur pour envoyer de l'argent. Une demande est ensuite 
+envoyée au système du partenaire local qui déclenche un paiement dans le portefeuille du destinataire. Le partenaire 
+est tenu d'ouvrir un compte auprès de MTN et d'y charger des fonds pour faciliter le transfert de fonds (entrants et sortants).
+
+    Primary key: 291f8c32428948ec9d98c4723359b671
+    Secondary key: 40d3d48140bd463c9ffee57c50d92aec
+
+    - creation de API key:
+        POST: les element qui ont ete envoyer pour la creation 
+            X-Reference-Id: 
+            Ocp-Apim-Subscription-Key = Primary key 
+
+        POST: pour avoir le API key genere
+            apiKey: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSMjU2In0.eyJjbGllbnRJZCI6ImZiZTBhYzEwLTI5ZTgtNDM0YS05Y2FmLTIxMTAzODBiMWE3ZSIsImV4cGlyZXMiOiIyMDIyLTAzLTI2VDE1OjIxOjM3LjA2MiIsInNlc3Npb25JZCI6IjlhNWUwOGNhLTI2ZTQtNDFmMC05MzQwLWMwYWNlMWFmM2QxZiJ9.brABEZU78KjkdoWhb1R8YUNbKwy8LBDVr9npGhPBm744mHm3AHqxHc9FxtmPlLkOaGFi9rVfj3y9gAR55hNgbwnypMy3npVI1XkL05qw65-iYKFRV6BVuaiuh33JER9iGV13kxQF6ajEZt5xeUjzi4EEPkOidqv3nah8rf3IGh9xvlDe_oQWgP3YsalMGfmjq_cEuY7uRE0_nwr0GlzAJNP0-zwjg0Orf0h45r2_iowIFTh6i67W_gQSR13ExEpwz4XgyAH9WHX85zcR4P5cENK_SH2t0dtOUKMcACNQgtn68ZJhEaiOKUcLqea5xizgUab4jLyg7JjQ44uGrN5U_w
+fbe0ac10-29e8-434a-9caf-2110380b1a7e
+sandbox
+
+
+
+{
+  "financialTransactionId": "78101194",
+  "externalId": "1",
+  "amount": "5000",
+  "currency": "EUR",
+  "payer": {
+    "partyIdType": "MSISDN",
+    "partyId": "22544650223"
+  },
+  "payerMessage": "Fais en bon usage mon gar",
+  "payeeNote": "TOP",
+  "status": "SUCCESSFUL"
+}

@@ -1,0 +1,50 @@
+{% load static %}
+
+<header id="header" class="fixed-top d-flex align-items-center">
+    <div class="container d-flex align-items-center">
+
+        <div class="logo me-auto">
+
+            <nav class="navbar navbar-light bg-light shadow-none">
+                <a class="navbar-brand" href="{% url 'home' %}">
+                    {% comment %} <img src="{% static 'assets/img/logo.jpg' %}" width="50" height="50" class="d-inline-block align-top" alt="">  {% endcomment %}
+                    sPay
+
+                </a>
+            </nav>
+
+        </div>
+
+
+        <nav id="navbar" class="navbar order-last order-lg-0 shadow-none">
+            <ul class="border-0">
+                <li><a class="nav-link scrollto " href="{% url 'home' %}">Home</a></li>
+                <li><a class="nav-link scrollto" href="#">Products</a></li>
+                <li><a class="nav-link scrollto" href="#">Services</a></li>
+                <li><a class="nav-link scrollto " href="#">Forums</a></li>
+                <li><a class="nav-link scrollto" href="#">Blogs</a></li>
+
+                <li><a class="nav-link scrollto" href="#">About Us</a></li>
+
+                
+                <li class="">
+                    <p class="nav-link scrollto pt-4 ">Hi, {{ request.user.name }}</p>
+                </li>
+
+                <li class="">
+                    <a class="nav-link" href="{% url 'personal_signup' %}"><span class="fa fa-user-plus"></span> register</a>
+                </li>
+
+                <li class="">
+                    <a class="nav-link" href="{% url 'login' %}"><span class="fa fa-sign-in"></span> Login</a>
+                </li>
+
+                
+            </ul>
+
+            <i class="bi bi-list mobile-nav-toggle"></i>
+        </nav>
+
+
+    </div>
+</header>

@@ -1,0 +1,158 @@
+{% extends "layout/base.html" %}
+{% load widget_tweaks %}
+
+{% load i18n %}
+
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+
+{% block content %}
+
+
+
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex align-items-center justify-content-center h-100">
+        <div class="col-md-8 col-lg-7 col-xl-6">
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+            class="img-fluid" alt="Phone image">
+        </div>
+
+        <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+            
+            <!-- Pills navs -->
+<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+  <li class="nav-item" role="presentation">
+    <a
+      class="nav-link active"
+      id="tab-register"
+      data-mdb-toggle="pill"
+      href="#pills-register"
+      role="tab"
+      aria-controls="pills-register"
+      aria-selected="True"
+      >Personal</a
+    >
+  </li>
+
+    <li class="nav-item" role="presentation">
+      <a 
+        class="nav-link" 
+        
+        href="{% url 'entreprise_signup' %}" 
+        {% comment %} aria-selected="true" {% endcomment %}
+        >Entreprise</a>
+    </li>
+    
+  </ul>
+  <!-- Pills navs -->
+
+    {% if messages %}
+      <div>
+        <strong>Messages:</strong>
+        <ul>
+          {% for message in messages %}
+          <li>{{message}}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    {% endif %}
+  
+  <!-- Pills content -->
+  <div class="tab-content">
+    
+    <div class="tab-pane fade show active" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+      <form method="POST" enctype="multipart/form-data" action="">
+        {% comment %} {% render_field form.first_name class="form-control" placeholder="" type="text" %} {% endcomment %}
+        {% csrf_token %}
+
+         <div class="form-outline mb-4">
+          {{ form.email }} 
+          <label class="form-label" for="id_email">Email</label>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              {{ form.first_name }} 
+              <label class="form-label" for="id_first_name">First name</label>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              {{ form.last_name }} 
+              <label class="form-label" for="id_last_name">Last name</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-outline mb-4">
+          {{ form.date_of_birth }}
+          <label class="form-label" for="id_date_of_birth">Date of birth</label>
+        </div>
+
+        <div class="form-outline mb-4">
+          {{ form.personal_phone_number }}
+          <label class="form-label" for="id_personal_phone_number">Phone number</label>
+        </div>
+
+        <div class="form-outline mb-4">
+          {{ form.personal_address }}
+          <label class="form-label" for="id_personal_address">Address</label>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              {{ form.password1 }} 
+              <label class="form-label" for="id_password1">Password</label>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              {{ form.password2 }} 
+              <label class="form-label" for="id_password2">Repeat password</label>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Checkbox -->
+        <div class="form-check d-flex justify-content-center mb-4">
+          <input
+            class="form-check-input me-2"
+            type="checkbox"
+            value=""
+            id="registerCheck"
+            {% comment %} checked {% endcomment %}
+            aria-describedby="registerCheckHelpText"
+          />
+          <label class="form-check-label" for="registerCheck">
+            I have read and agree to the terms
+          </label>
+        </div>
+  
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-3">Sign up</button>
+      </form>
+    </div>
+
+    
+
+  </div>
+  
+</div>
+<!-- Pills content -->
+
+
+
+        </div>
+      </div>
+    </div>
+</section>
+
+{% endblock %}
+
+
+
+
