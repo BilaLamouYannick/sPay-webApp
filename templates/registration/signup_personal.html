@@ -1,6 +1,8 @@
 {% extends "layout/base.html" %}
 {% load widget_tweaks %}
 
+{% load static %}
+
 {% load i18n %}
 
 
@@ -97,10 +99,21 @@
           <label class="form-label" for="id_personal_phone_number">Phone number</label>
         </div>
 
-        <div class="form-outline mb-4">
-          {{ form.personal_address }}
-          <label class="form-label" for="id_personal_address">Address</label>
-        </div>
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              {{ form.personal_address }}
+              <label class="form-label" for="id_personal_address">Address</label>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="">
+              {% comment %} {{ form.pays }} {% endcomment %}
+              {{ form.pays }} 
+              {% comment %} <label class="form-label" for="id_pays">Pays</label> {% endcomment %}
+            </div>
+          </div>
+        </div>  
 
         <div class="row">
           <div class="col-md-6 mb-4">
@@ -116,6 +129,7 @@
             </div>
           </div>
         </div>
+      
   
         <!-- Checkbox -->
         <div class="form-check d-flex justify-content-center mb-4">
@@ -136,8 +150,6 @@
         <button type="submit" class="btn btn-primary btn-block mb-3">Sign up</button>
       </form>
     </div>
-
-    
 
   </div>
   

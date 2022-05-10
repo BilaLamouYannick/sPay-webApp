@@ -1,0 +1,70 @@
+{% extends "layout/base.html" %}
+{% load widget_tweaks %}
+
+{% load i18n %}
+
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-5 pt-3 h-100">
+    <div class="row flex-nowrap h-100">
+        {% include 'dashboard/layout/nav.html' %}
+        <div class="col py-3">
+            
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <p> Votre solde est de: <strong> {{ uid_wallet.balance }} FCFA </strong> </p>
+            </div>
+
+            <div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Date</th>
+                            <th scope="col">Expediteur</th>
+                            <th scope="col">Recepteur</th>
+                            <th scope="col">Montant</th>
+                            <th scope="col">Type de Transaction</th>
+                            <th scope="col">Operateur</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for transaction in transactions %}
+                            <tr>
+                                <th scope="row">{{ transaction.created }}</th>
+
+                                {% if transaction.sender == None %}
+                                    <td>{{ transaction.sender_number }}</td>
+                                    {% else %}
+                                    <td>{{ transaction.sender }}</td>
+                                {% endif %}
+
+                                {% if transaction.receiver == None %}
+                                    <td>{{ transaction.receiver_number }}</td>
+                                    {% else %}
+                                    <td>{{ transaction.receiver }}</td>
+                                {% endif %}
+                                
+                                <td>{{ transaction.amount }} <strong>FCFA</strong> </td>
+                                <td>{{ transaction.type_transaction }}</td>
+                                <td>{{ transaction.operator }}</td>
+                                <td>{{ transaction.status }}</td>
+                            </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+

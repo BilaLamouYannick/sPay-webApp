@@ -1,0 +1,54 @@
+{% extends "layout/base.html" %}
+{% load widget_tweaks %}
+
+{% load i18n %}
+
+
+{% block head_title %}{% trans "Sign In" %}{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid mt-5 pt-3 h-100">
+    <div class="row flex-nowrap h-100 ">
+        {% include 'dashboard/layout/nav.html' %}
+        <div class="col py-3">
+            
+            <div class="d-flex flex-row-reverse bd-highlight">
+                <p> Votre solde est de: <strong> {{ uid_wallet.balance }} FCFA </strong> </p>
+            </div>
+
+            <div class="col-lg-4 ">
+                <form method="POST" enctype="multipart/form-data" action="">
+                    {% csrf_token %}
+                    <div class="form-outline mb-4">
+                        {% render_field form.amount class="form-control" name="amount" placeholder="" %}
+                        <label class="form-label" for="">Montant</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        {% render_field form.receiver_number class="form-control" name="receiver_number" placeholder="" %}
+                        <label class="form-label" for="">Numero du beneficiere</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        {% comment %} {% render_field form.operator class="form-control" name="amount" placeholder="" %} {% endcomment %}
+                        {{ form.operator }}
+                        {% comment %} <label class="form-label" for="">Methode de payement</label> {% endcomment %}
+                    </div>
+                    
+                    {% render_field  form.type_transaction hidden="hidden" selected="Withdraw"  class="form-control" name="type_transaction" placeholder="" %}
+
+                    
+
+                    <button type="submit" class="btn btn-primary btn-block mb-2">Faire un retrait</button>
+                </form>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+

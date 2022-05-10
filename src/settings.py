@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-627b!efadhp*e-i*ysn1%%re!_5lxj0r2#l63oao*+yfugk5i&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     
     # pip app
     'widget_tweaks',
+    'django_countries',
     
     # local App
     'OAuth',
@@ -134,6 +135,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = "OAuth.User"
+LOGIN_REDIRECT_URL = "home"
 
 # Account
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

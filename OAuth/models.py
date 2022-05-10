@@ -2,6 +2,9 @@ from django.db import models
 
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
+
+from django_countries.fields import CountryField
+from requests import request
 # Create your models here.
 
 from .manager import CustomUserManager
@@ -15,6 +18,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=254, blank=False, unique=True)
     first_name = models.CharField(max_length=250)
     last_name = models.CharField(max_length=250)
+    pays = CountryField()
     verified = models.BooleanField(default=False)
     is_personal = models.BooleanField(default=False)
     is_entreprise = models.BooleanField(default=False)
@@ -42,13 +46,17 @@ class PersonalAccount(models.Model):
     def __str__(self):
         return str(self.user.email)
     
+    
 
 class EntrepriseAccount(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    entreprise_phone_number = models.CharField(max_length=50, blank=True)
+    entreprise_name = models.CharField(max_length=250, blank=True)
+    entreprise_phone_number = models.CharField(max_length=250, blank=True)
     entreprise_address = models.CharField(max_length=250, blank=True)
     entreprise_localisation = models.CharField(max_length=250, blank=True)
     entreprise_description = models.TextField()
+    entreprise_type = models.CharField(max_length=250, blank=True)
+    entreprise_branch_of_activity = models.CharField(max_length=250, blank=True) 
     
     
     class Meta:
@@ -56,4 +64,4 @@ class EntrepriseAccount(models.Model):
         verbose_name_plural = "Entreprise Accounts"
     
     def __str__(self):
-        return str(self.user.email)
+        return str(self.entreprise_name)

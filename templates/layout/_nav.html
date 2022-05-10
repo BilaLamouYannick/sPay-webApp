@@ -22,13 +22,22 @@
                 <li><a class="nav-link scrollto" href="#">Products</a></li>
                 <li><a class="nav-link scrollto" href="#">Services</a></li>
                 <li><a class="nav-link scrollto " href="#">Forums</a></li>
-                <li><a class="nav-link scrollto" href="#">Blogs</a></li>
 
                 <li><a class="nav-link scrollto" href="#">About Us</a></li>
 
+                {% comment %}  si c'est un compte client alors on affiche wallet pour une entreprise Dashboard  {% endcomment %}
+                {% if request.user.is_authenticated and request.user.is_personal %}
+                    <li><a class="nav-link scrollto" href="{% url 'personal_wallet' %}">Wallet</a></li>
+                {% elif request.user.is_authenticated and request.user.is_entreprise %}
+                    <li><a class="nav-link scrollto" href="{% url 'entreprise_wallet' %}">Dashboard</a></li>
+                {% endif %}
+                
+                
+
+                <hr class="m-2" style="border-left: 1px solid black; height: 50px;">
                 
                 <li class="">
-                    <p class="nav-link scrollto pt-4 ">Hi, {{ request.user.name }}</p>
+                    <p class="nav-link scrollto pt-4 ">Hi, {{ request.user }}</p>
                 </li>
 
                 <li class="">

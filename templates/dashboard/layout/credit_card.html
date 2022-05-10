@@ -1,0 +1,28 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'assets/css/style_card.css' %}">
+
+
+<div class="">
+    <div class="card__front card__part">
+        {% comment %} <img class="card__front-square card__square" src="https://image.ibb.co/cZeFjx/little_square.png"> {% endcomment %}
+        
+        <div class="card__front-square card__square ">sPay</div>
+        {% comment %} <img class="card__front-logo card__logo" src="https://www.fireeye.com/partners/strategic-technology-partners/visa-fireeye-cyber-watch-program/_jcr_content/content-par/grid_20_80_full/grid-20-left/image.img.png/1505254557388.png"> {% endcomment %}
+        <div class="card__front-logo card__logo card__info">Carte Virtuel</div>
+        
+        <p class="card_numer">{{ card_number }}</p>
+        <div class="card__space-75">
+            <span class="card__label">Card holder</span>
+            <p class="card__info">{{ request.user.first_name }} {{ request.user.last_name }}</p>
+        </div>
+        <div class="card__space-25">
+            <span class="card__label"><img class="float-right" style="height: 55px" src="https://i.imgur.com/lRG4VIS.png"></span>
+            {% comment %} <p class="card__info">10/25</p> {% endcomment %}
+            {% comment %} <div class="mk-icon-visa text-center pt-2 h3 fst-italic">virtual</div> {% endcomment %}
+        </div>
+    </div>
+
+    
+
+</div>

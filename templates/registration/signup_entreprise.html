@@ -9,8 +9,6 @@
 
 {% block content %}
 
-
-
 <section class="vh-100">
     <div class="container py-5 h-100">
       <div class="row d-flex align-items-center justify-content-center h-100">
@@ -83,6 +81,36 @@
         <div class="row">
           <div class="col-md-6 mb-4">
             <div class="form-outline">
+              {{ form.entreprise_name }} 
+              <label class="form-label" for="id_entreprise_name">Entreprise name</label>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              {{ form.entreprise_type }} 
+              <label class="form-label" for="id_entreprise_type">Type d'entreprise</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              {{ form.entreprise_localisation }}
+              <label class="form-label" for="id_entreprise_localisation">Localisation</label>
+            </div>
+          </div>
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
+              {{ form.entreprise_branch_of_activity }} 
+              <label class="form-label" for="id_entreprise_branch_of_activity">Secteur d'activite</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 mb-4">
+            <div class="form-outline">
               {{ form.entreprise_phone_number }}
               <label class="form-label" for="id_entreprise_phone_number">Entreprise phone number</label>
             </div>
@@ -94,16 +122,17 @@
             </div>
           </div>
         </div>
+
         
   
         <div class="form-outline mb-4">
-          {{ form.entreprise_localisation }}
-          <label class="form-label" for="id_entreprise_localisation">Localisation</label>
-        </div>
-  
-        <div class="form-outline mb-4">
           {{ form.entreprise_description }}
-          <label class="form-label" for="id_entreprise_description">Description</label>
+          <label class="form-label" for="id_entreprise_description">Description </label>
+        </div>
+        
+        <div class=" mb-4">
+          {{ form.pays }} 
+          {% comment %} <label class="form-label" for="id_email">Email</label> {% endcomment %}
         </div>
 
         <div class="row">
@@ -120,24 +149,13 @@
             </div>
           </div>
         </div>
+
+        
   
-        <!-- Checkbox -->
-        <div class="form-check d-flex justify-content-center mb-4">
-          <input
-            class="form-check-input me-2"
-            type="checkbox"
-            value=""
-            id="registerCheck"
-            {% comment %} checked {% endcomment %}
-            aria-describedby="registerCheckHelpText"
-          />
-          <label class="form-check-label" for="registerCheck">
-            I have read and agree to the terms
-          </label>
-        </div>
+        
   
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-3">Sign up</button>
+        <button type="submit" class="btn btn-primary btn-block mb-2">Sign up</button>
       </form>
     </div>
 
@@ -145,7 +163,6 @@
   
 </div>
 <!-- Pills content -->
-
 
 
         </div>
