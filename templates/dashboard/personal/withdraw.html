@@ -31,6 +31,11 @@
                     </div>
 
                     <div class="form-outline mb-4">
+                        {% render_field form.password class="form-control" name="password" placeholder="" %}
+                        <label class="form-label" for="">Mot de passe de confirmation</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
                         {% comment %} {% render_field form.operator class="form-control" name="amount" placeholder="" %} {% endcomment %}
                         {{ form.operator }}
                         {% comment %} <label class="form-label" for="">Methode de payement</label> {% endcomment %}
@@ -38,9 +43,8 @@
                     
                     {% render_field  form.type_transaction hidden="hidden" selected="Withdraw"  class="form-control" name="type_transaction" placeholder="" %}
 
-                    
 
-                    <button type="submit" class="btn btn-primary btn-block mb-2">Faire un retrait</button>
+                    <button type="submit" class="btn btn-primary btn-block mb-2">Valider la transaction</button>
                 </form>
             </div>
             

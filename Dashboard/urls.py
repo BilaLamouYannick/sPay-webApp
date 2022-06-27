@@ -4,6 +4,8 @@ from Dashboard.views import entrepriseViews, personalViews
 
 urlpatterns = [
     path('dashbord/personnal/', personalViews.index, name='personal_wallet'),
+    path('dashbord/personnal/withdraw', personalViews.withdraw, name='personal_withdraw'),   
+    path('dashbord/personnal/accountFunding', personalViews.accountFunding, name='personal_accountFunding'),
     
     
     # Entrprise

@@ -15,16 +15,22 @@
 
 
             <li class="nav-item">
-                <a href="{% url 'entreprise_wallet' %}" class="nav-link align-middle px-0">
+                <a {% if request.user.is_entreprise %} href="{% url 'entreprise_wallet' %}" {% elif request.user.is_personal %} href="{% url 'personal_wallet' %}" {% endif %} class="nav-link align-middle px-0">
                     <i class="fs-4 bi-speedometer2"></i> <span class="ms-1 d-none d-sm-inline">Dashboard</span>
                 </a>
             </li>
             
             <li>
-                <a href="{% url 'entreprise_withdraw' %}" class="nav-link px-0 align-middle">
+                <a {% if request.user.is_entreprise %} href="{% url 'entreprise_withdraw' %}" {% elif request.user.is_personal %}  href="{% url 'personal_withdraw' %}" {% endif %}  class="nav-link px-0 align-middle">
                     <i class="fs-4 bi-wallet2"></i> <span class="ms-1 d-none d-sm-inline">Withdraw</span></a>
             </li>
-            <br><br><br><br><br><br><br><br><br>
+
+            <li>
+                <a {% if request.user.is_entreprise %} href="{% url 'entreprise_withdraw' %}" {% elif request.user.is_personal %}  href="{% url 'personal_accountFunding' %}" {% endif %}  class="nav-link px-0 align-middle">
+                    <i class="fs-4 bi-cash-stack"></i> <span class="ms-1 d-none d-sm-inline">Faire un depot</span></a>
+            </li>
+
+            <br><br><br><br><br><br>
             <li>
                 <a href="#" class="nav-link px-0 align-middle">
                     <i class="fs-4 bi-gear"></i> <span class="ms-1 d-none d-sm-inline">Setting</span></a>

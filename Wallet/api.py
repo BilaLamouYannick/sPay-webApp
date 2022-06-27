@@ -5,6 +5,7 @@ import requests, json, uuid, base64
 
 from django.conf import settings
 
+import http.client, urllib.request, urllib.parse, urllib.error, base64
 
 key_user = settings.SUBSCRIPTION_KEY_USER_CREATE
 key_trans = settings.SUBSCRIPTION_KEY_TRANS_CREATE
@@ -129,34 +130,59 @@ class MTN_WalletClient:
         
         return response
     
+
+    
+    def bc_autoriser(self, access_token):
+        """
+            La fonction qui permet de valider une trasaction pour le client
+        """
+        
+        url = self.url + f'/collection/v1_0/bc-authorize'
+        headers =   {
+            "Authorization": "Bearer " + access_token, 
+            # "X-Callback-Url": "",
+            "X-Reference-Id": self.unique_ref,
+            "X-Target-Environment": "sandbox",
+            "Ocp-Apim-Subscription-Key": self.subscription_key_trans_create
+        }
+        
+        body =   {
+            'login_hint': 'MSISDN',
+            'scope': 2
+        }
+        
+        try:
+            response = requests.post(url, data=json.dumps(body).encode("ascii"), headers=headers)
+        except Exception as e:
+            raise e
+        
+        return response
     
     
-    
-    # def bc_autoriser(self, access_token):
-    #     """
-    #         La fonction qui permet de valider une trasaction prr le client
-    #     """
+    def test_bc(self, access_token):
         
-    #     url = self.url + f'/collection/v1_0/bc-authorize'
-    #     headers =   {
-    #         "Authorization": "Bearer " + access_token, 
-    #         # "X-Callback-Url": "",
-    #         "X-Reference-Id": self.unique_ref,
-    #         "X-Target-Environment": "sandbox",
-    #         "Ocp-Apim-Subscription-Key": self.subscription_key_trans_create
-    #     }
-        
-    #     # body =   {
-    #     #     'login_hint': 'MSISDN',
-    #     #     'scope': 
-    #     # }
-        
-    #     try:
-    #         response = requests.post(url, data=json.dumps(body).encode("ascii"), headers=headers)
-    #     except Exception as e:
-    #         raise e
-        
-    #     return response
+        headers = {
+            # Request headers
+            'Authorization': "Bearer " + access_token,
+            'X-Target-Environment': "sandbox",
+            # 'X-Callback-Url': '',
+            "X-Reference-Id": self.unique_ref,
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Ocp-Apim-Subscription-Key': self.subscription_key_trans_create,
+        }
+
+        params = urllib.parse.urlencode({
+        })
+
+        try:
+            conn = http.client.HTTPSConnection('sandbox.momodeveloper.mtn.com')
+            conn.request("POST", "/collection/v1_0/bc-authorize?%s" % params, "{body}", headers)
+            response = conn.getresponse()
+            data = response.read()
+            print(data)
+            conn.close()
+        except Exception as e:
+            print("[Errno {0}] {1}".format(e.errno, e.strerror))    
 
 
     

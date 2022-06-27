@@ -32,7 +32,6 @@ def accountFunding(sender, instance, created, **kwargs):
                 print(mtn_api_key)
                 print(token['access_token'])
                 
-                
                 if status_funding.status_code == 202:
                     receiver_wallet = Wallet.objects.get(uid=uid_user_receiver)
                     receiver_wallet.balance = receiver_wallet.balance + transaction_amount
