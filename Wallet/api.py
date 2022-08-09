@@ -159,6 +159,56 @@ class MTN_WalletClient:
         return response
     
     
+    def set_account_withdraw(self, access_token, amount, externalId, partyId, payerMessage, payeeNote):
+        """
+            La fonction qui permet de retirer de l'argent
+        """
+        
+        url = self.url + f'/collection/v1_0/requesttowithdraw'
+        headers =  {
+            "Authorization": "Bearer " + access_token, 
+            # "X-Callback-Url": "",
+            "X-Reference-Id": self.unique_ref,
+            "X-Target-Environment": "sandbox",
+            "Ocp-Apim-Subscription-Key": self.subscription_key_trans_create
+        }
+        
+        body =   {
+            "payeeNote": payeeNote,
+            "externalId": externalId,
+            "amount": amount,
+            "currency": "EUR",
+            "payer": {
+                "partyIdType": "MSISDN",
+                "partyId": partyId
+            },
+            "payerMessage": payerMessage
+        }
+        
+        try:
+            response = requests.post(url, data=json.dumps(body).encode("ascii"), headers=headers)
+        except Exception as e:
+            raise e
+
+        return response
+    
+    
+    def get_account_balance(self, access_token):
+        """
+            La fonction qui permet d'avoir le solde du client
+        """
+        
+        url = self.url + f'/collection/v1_0/account/balance'
+        headers =  {
+            "Authorization": "Bearer " + access_token, 
+            # "X-Callback-Url": "",
+            # "X-Reference-Id": self.unique_ref,
+            "X-Target-Environment": "sandbox",
+            "Ocp-Apim-Subscription-Key": self.subscription_key_trans_create
+        }
+        pass
+    
+    
     def test_bc(self, access_token):
         
         headers = {

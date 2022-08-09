@@ -1,4 +1,5 @@
 import email
+from django.dispatch import receiver
 from django.shortcuts import render, redirect
 from OAuth.models import User
 from django.db.models import Q
@@ -43,18 +44,18 @@ def accountFunding(request):
     
     if request.method == 'POST':
         amount = request.POST.get('amount')
-        receiver_number = request.POST.get('receiver_number')
+        sender_number = request.POST.get('receiver_number')
         operator = request.POST.get('operator')
-        sender = uid_wallet
+        receiver = uid_wallet
         type_transaction = request.POST.get('type_transaction')
-        password = request.POST.get('password')
-        user = authenticate(request, email=request.user.email, password=password)
+        # password = request.POST.get('password')
+        # user = authenticate(request, email=request.user.email, password=password)
         
-        if user is not None:
+        if receiver is not None:
             Transaction.objects.create(
-                sender=sender,
+                receiver=receiver,
                 amount=amount,
-                receiver_number=receiver_number,
+                sender_number=sender_number,
                 operator=operator,
                 type_transaction=type_transaction
             )

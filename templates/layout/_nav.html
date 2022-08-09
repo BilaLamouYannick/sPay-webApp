@@ -35,19 +35,26 @@
                 
 
                 <hr class="m-2" style="border-left: 1px solid black; height: 50px;">
-                
-                <li class="">
-                    <p class="nav-link scrollto pt-4 ">Hi, {{ request.user }}</p>
-                </li>
 
-                <li class="">
-                    <a class="nav-link" href="{% url 'personal_signup' %}"><span class="fa fa-user-plus"></span> register</a>
-                </li>
+                {% if request.user.is_authenticated %}
 
-                <li class="">
-                    <a class="nav-link" href="{% url 'login' %}"><span class="fa fa-sign-in"></span> Login</a>
-                </li>
+                    <li class="">
+                        <p class="nav-link scrollto pt-4 ">Hi, {{ request.user }}</p>
+                    </li>
+                    <li class="">
+                        <a class="nav-link" href="{% url 'logout' %}"><span class="fa fa-user-plus"></span> Logout</a>
+                    </li>
 
+                {% else %}
+
+                    <li class="">
+                        <a class="nav-link" href="{% url 'personal_signup' %}"><span class="fa fa-user-plus"></span> register</a>
+                    </li>
+
+                    <li class="">
+                        <a class="nav-link" href="{% url 'login' %}"><span class="fa fa-sign-in"></span> Login</a>
+                    </li>
+                {% endif %}
                 
             </ul>
 

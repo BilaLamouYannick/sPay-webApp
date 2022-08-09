@@ -14,6 +14,5 @@ STATUS_TRANSACTIONS = [
 OPERATOR = [
     ('MTN', 'MTN'),
     ('ORANGE', 'ORANGE'),
-    # ('Reject', 'Reject')
-    ('SPAY Account', 'SPAY Account')
+    # ('SPAY Account', 'SPAY Account')
 ]

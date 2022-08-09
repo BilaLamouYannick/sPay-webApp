@@ -23,18 +23,19 @@ def accountFunding(sender, instance, created, **kwargs):
                 mtn = MTN(str(mtn_api_user))
                 token = mtn.get_token(mtn_api_key)
                 
-                status_funding = mtn.set_account_funding(token['access_token'], transaction_amount, 2, 46733123453, "fais bien", "c'est top")
+                status_funding = mtn.set_account_funding(token['access_token'], int(transaction_amount), 2, 46733123453, "fais bien", "c'est top")
                 
                 info_funding = mtn.get_account_funding(token['access_token'])
                 
+                # print(mtn_api_user)
+                # print(mtn_api_key)
+                # print(token['access_token'])
                 
-                print(mtn_api_user)
-                print(mtn_api_key)
-                print(token['access_token'])
+                # print(status_funding)
                 
                 if status_funding.status_code == 202:
                     receiver_wallet = Wallet.objects.get(uid=uid_user_receiver)
-                    receiver_wallet.balance = receiver_wallet.balance + transaction_amount
+                    receiver_wallet.balance = receiver_wallet.balance + int(transaction_amount)
                     receiver_wallet.save(update_fields=['balance'])
                     instance.status = "SUCCESSFUL"
                     instance.save()
@@ -69,19 +70,20 @@ def accountFunding(sender, instance, created, **kwargs):
                 receiver_personalWallet.save(update_fields=['balance'])
             
         
+    # pour le retrait d'argent    
     elif instance.type_transaction == "Withdraw":
         if created:
             transaction_amount = instance.amount
             uid_user_sender = instance.sender.uid
             
-            sender_personalWallet = Wallet.objects.get(uid=uid_user_sender)
+            sender_wallet = Wallet.objects.get(uid=uid_user_sender)
             
-            if sender_personalWallet.balance < int(transaction_amount):
+            if sender_wallet.balance < int(transaction_amount):
                 instance.status = "FAILED"
                 instance.save()
             else:
-                sender_personalWallet.balance = sender_personalWallet.balance - int(transaction_amount)
+                sender_wallet.balance = sender_wallet.balance - int(transaction_amount)
                 instance.status = "SUCCESSFUL"
                 instance.save()
-                sender_personalWallet.save(update_fields=['balance'])
+                sender_wallet.save(update_fields=['balance'])
                 
