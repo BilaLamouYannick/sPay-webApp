@@ -6,9 +6,27 @@ from Wallet.models import Wallet, Mtn_API_Account
 from Wallet.api import MTN_WalletClient
 
 
+def get_number_card(uid_wallet):
+    card_number = list()
+    card = list()
+    number = ''.join(ch for ch in uid_wallet if ch.isnumeric())
+    i = 0
+    for el in number:
+        card.append(el)
+        i += 1
+        if len(card) == 4:
+            text = "".join(card)
+            card = list()
+            card_number.append(text)        
+    
+    card_number = " ".join(card_number)
+    return card_number
+
+
 @receiver(post_save, sender=User)
 def create_wallet(sender, instance, created, **kwargs):
     if created:
+        
         Wallet.objects.create(user=instance)
         
         
@@ -19,6 +37,15 @@ def create_mtn_API_account(sender, instance, created, **kwargs):
         
         # API creation user pour l'utilisateur
         uid_user = str(instance.uid)
+        
+        wallet = sender.objects.get(uid=instance.uid)
+        wallet_uid = wallet.uid
+        card_number = get_number_card(str(wallet_uid))
+        
+        wallet.cart_number = str(card_number)
+        
+        wallet.save()
+        
         mtn = MTN_WalletClient(uid_user)
         api_usr = mtn.create_api_user()
         if api_usr.status_code == 201:

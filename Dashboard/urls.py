@@ -6,6 +6,7 @@ urlpatterns = [
     path('dashbord/personnal/', personalViews.index, name='personal_wallet'),
     path('dashbord/personnal/withdraw', personalViews.withdraw, name='personal_withdraw'),   
     path('dashbord/personnal/accountFunding', personalViews.accountFunding, name='personal_accountFunding'),
+    path('dashbord/personnal/transfert', personalViews.transfert, name='personal_transfert'),
     
     
     # Entrprise

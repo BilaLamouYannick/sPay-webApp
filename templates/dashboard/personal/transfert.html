@@ -27,7 +27,12 @@
 
                     <div class="form-outline mb-4">
                         {% render_field form.receiver_number class="form-control" name="receiver_number" placeholder="" %}
-                        <label class="form-label" for="">Numero</label>
+                        <label class="form-label" for="">Numero du compte sPay</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                        {% render_field form.password class="form-control" name="password" placeholder="" %}
+                        <label class="form-label" for="">Mot de passe de confirmation</label>
                     </div>
 
                     {% comment %} <div class="form-outline mb-4">
@@ -36,11 +41,11 @@
                     </div> {% endcomment %}
 
                     
-                    <div class="form-outline mb-4">
+                    {% comment %} <div class="form-outline mb-4">
                         {{ form.operator }}
-                    </div>
+                    </div> {% endcomment %}
                     
-                    {% render_field  form.type_transaction hidden="hidden" selected="AccountFunding"  class="form-control" name="type_transaction" placeholder="" %}
+                    {% render_field  form.type_transaction hidden="hidden" selected="transfert"  class="form-control" name="type_transaction" placeholder="" %}
 
                     
 

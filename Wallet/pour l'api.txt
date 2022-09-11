@@ -179,3 +179,5 @@ sandbox
   "payeeNote": "TOP",
   "status": "SUCCESSFUL"
 }
+
+pip install mtnmomo

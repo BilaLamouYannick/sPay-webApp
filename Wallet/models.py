@@ -10,6 +10,7 @@ import uuid
 
 class Wallet(models.Model):
     uid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    cart_number = models.CharField(max_length=250, blank=True, null=True)
     user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
     balance = models.DecimalField(_("balance"), blank=True, default=0, max_digits=100, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True)
@@ -41,6 +42,7 @@ class Transaction(models.Model):
 class Mtn_API_Account(models.Model):
     api_user = models.ForeignKey(Wallet, on_delete=models.CASCADE)
     api_key = models.CharField(max_length=350)
+    # api_key_disb = models.CharField(max_length=350)
     operator = models.CharField(max_length=50, choices=OPERATOR)
     
     class Meta:
