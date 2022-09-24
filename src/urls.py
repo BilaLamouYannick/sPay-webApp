@@ -21,4 +21,5 @@ urlpatterns = [
     path('', include('Portfolio.urls')),
     path('accounts/', include('OAuth.urls')),
     path('wallet_account/', include('Dashboard.urls')),
+    path('api/v_1/', include('Api.urls')),
 ]

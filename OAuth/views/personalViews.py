@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.views.generic import CreateView
 
+
 from ..models import User
 from ..forms import PersonalSignUpForm
 
@@ -20,3 +21,4 @@ class PersonalSignUpView(CreateView):
         # login(self.request, user)
         return redirect('/accounts/login/')
         # return super().form_valid(form)
+

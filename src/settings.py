@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 import os
 
+from datetime import timedelta
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,16 +41,24 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    
     # pip app
     'widget_tweaks',
     'django_countries',
+    'rest_framework',
+    # 'rest_framework.authtoken', 
+    'knox',
+    'corsheaders',
     
     # local App
     'OAuth',
     'Wallet',
     'Portfolio',
     'Dashboard',
+    'Api',
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,6 +68,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    
+    # CORS
+    'corsheaders.middleware.CorsMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -138,12 +152,51 @@ AUTH_USER_MODEL = "OAuth.User"
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = 'home'
 
+
+# SIMPLE_JWT = {
+#     'USER_ID_FIELD': 'uid',
+#     "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
+# }
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
+        # 'rest_framework.permissions.IsAuthenticated',
+        # 'rest_framework.permissions.AllowAny',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
+    #     'rest_framework.authentication.TokenAuthentication',
+        'knox.auth.TokenAuthentication',
+    ]
+       
+}
+
+
+
 # Account
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = 1
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 
+# axios
+CSRF_COOKIE_NAME = 'XSRF-TOKEN'
+CSRF_HEADER_NAME = 'HTTP_X_XSRF_TOKEN'
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+
+# CORS_ALLOW_ALL_ORIGINS = True
+
+# CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+     'http://localhost:3000',
+)
 
 # Api MTN
 COLLECTIONS_SUBSCRIPTION_KEY_USER_CREATE = 'd4e785ef01f944938f65aaff22c7cd82'
@@ -151,3 +204,9 @@ COLLECTIONS_SUBSCRIPTION_KEY_TRANS_CREATE = 'c6794f802dfa46278f7992b794d67e9e'
 
 DISBURSEMENTS_SUBSCRIPTION_KEY_USER_CREATE = '21d53f564be9473587be513c35abbc7e'
 DISBURSEMENTS_SUBSCRIPTION_KEY_TRANS_CREATE = '39404476efb74c72af0832fa908d890f'
+
+
+# {
+#     "email": "alice@gmail.com",
+#     "password": "audique10"
+# }
