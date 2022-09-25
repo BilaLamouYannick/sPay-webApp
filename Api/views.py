@@ -157,6 +157,7 @@ def transfert(request):
         type_transaction = "Transfert"
         operator = ('SPAY Account', 'SPAY Account')[0]
         
+        
         wallet = Wallet.objects.get(cart_number=cart_number)
         
         receiver_cart_number = receiver_cart_number.replace(" ", "")
