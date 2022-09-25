@@ -111,14 +111,45 @@ def accountFunding(request):
 
 
 @api_view(['GET', 'POST'])
-def transfert(request):
+def withdraw(request):
     if request.method == 'POST':
         # print(request.data['email'])
         
+        amount = request.data['amount']
+        receiver_number = request.data['receiver_number']
+        operator = request.data['operator']
+        cart_number = request.data['cart_number']
+        
+        email = request.data['email']
+        password = request.data['password']
+        type_transaction = "Withdraw"
+        
+        # print(uuid.UUID(receiver))
+        
+        wallet = Wallet.objects.get(cart_number=cart_number)
+        
+        user = authenticate(request, email=email, password=password)
+        
+        if cart_number is not None and user is not None:
+            Transaction.objects.create(
+                sender=wallet,
+                amount=int(amount),
+                receiver_number=receiver_number,
+                operator=operator,
+                type_transaction=type_transaction,
+            )
+        
+        return Response({"message": "Got some data!", "data": request.data}, status=status.HTTP_200_OK)
+    return Response({"message": "Withdraw!"})
+
+
+@api_view(['GET', 'POST'])
+def transfert(request):
+    if request.method == 'POST':
         
         amount = request.data['amount']
-        sender_number = request.data['sender_number']
-        operator = request.data['operator']
+        # sender_number = request.data['sender_number']
+        # operator = request.data['operator']
         receiver_cart_number = request.data['receiver_cart_number']
         cart_number = request.data['cart_number']
         email = request.data['email']
@@ -126,24 +157,28 @@ def transfert(request):
         type_transaction = "Transfert"
         operator = ('SPAY Account', 'SPAY Account')[0]
         
-        # print(uuid.UUID(receiver))
-        
         wallet = Wallet.objects.get(cart_number=cart_number)
-        receiver_wallet = Wallet.objects.get(cart_number=receiver_cart_number)
         
-        user = authenticate(request, email=request.user.email, password=password)
+        receiver_cart_number = receiver_cart_number.replace(" ", "")
         
-        if cart_number is not None:
+        cart_number_receiver = str(receiver_cart_number[:4]+ " " + receiver_cart_number[4:8]+ " " + receiver_cart_number[8:12]+ " " + receiver_cart_number[12:16]+ " " + receiver_cart_number[16:])
+        
+        receiver_wallet = Wallet.objects.get(cart_number=cart_number_receiver)
+        
+        user = authenticate(request, email=email, password=password)
+        
+        
+        if cart_number is not None and user is not None:
             Transaction.objects.create(
-                receiver=wallet,
+                receiver=receiver_wallet,
                 amount=int(amount),
-                sender_number=int(sender_number),
+                sender=wallet,
                 operator=operator,
                 type_transaction=type_transaction
             )
         
         return Response({"message": "Got some data!", "data": request.data}, status=status.HTTP_200_OK)
-    return Response({"message": "AccountFunding!"})
+    return Response({"message": "Transfert!"})
 
 # class TransactionsView(views.APIView):
 #     def post(self, )
@@ -159,4 +194,22 @@ def transfert(request):
 #     "operator": "MTN",
 #     "sender_number": "38740029877",
 #     "cart_number":"4893 6646 5751 9946 8338"
+# }
+
+# {
+#     "amount": "200",
+#     "password": "audique10",
+#     "email": "alice@gmail.com",
+#     "receiver_number": "38740029877",
+#     "cart_number":"4893 6646 5751 9946 8338",
+#     "operator": "MTN"
+# }
+
+# {
+#     "amount": "10",
+#     "password": "audique10",
+#     "email": "alice@gmail.com",
+#     "sender_number": "38740029877",
+#     "cart_number":"4893 6646 5751 9946 8338",
+#     "receiver_cart_number": "1207 6894 4145 0272 3290"
 # }
